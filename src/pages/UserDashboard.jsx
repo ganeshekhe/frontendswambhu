@@ -1,15 +1,12 @@
-
-
-
-
-
-
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useUser } from "../context/UserContext";
 import { Check, FileText, Download, AlertCircle } from "lucide-react";
 import { saveAs } from "file-saver";
-import { io } from "socket.io-client"; // 👈 added
+import { io } from "socket.io-client";
+
+const BASE_URL = import.meta.env.VITE_BASE_URL;
+const FILE_URL = `${BASE_URL}/api/files/`;
 
 const UserDashboard = () => {
   const { user } = useUser();
@@ -17,21 +14,16 @@ const UserDashboard = () => {
   const [corrections, setCorrections] = useState({});
   const [loading, setLoading] = useState(false);
 
-  const FILE_URL = "http://localhost:5000/api/files/";
-
   useEffect(() => {
     if (user?.token) {
       fetchApps();
 
-      // 👇 socket setup
-      const socket = io("http://localhost:5000"); // 🔁 your backend URL
+      const socket = io(BASE_URL);
 
-      // Refresh apps on any update
       socket.on("applicationStatusUpdated", fetchApps);
       socket.on("newApplication", fetchApps);
       socket.on("certificateUploaded", fetchApps);
 
-      // Cleanup
       return () => {
         socket.disconnect();
       };
@@ -41,7 +33,7 @@ const UserDashboard = () => {
   const fetchApps = async () => {
     setLoading(true);
     try {
-      const res = await axios.get("http://localhost:5000/api/applications/user", {
+      const res = await axios.get(`${BASE_URL}/api/applications/user`, {
         headers: { Authorization: `Bearer ${user.token}` },
       });
       setApplications(res.data.reverse());
@@ -55,7 +47,7 @@ const UserDashboard = () => {
   const handleConfirm = async (appId) => {
     try {
       await axios.put(
-        `http://localhost:5000/api/applications/${appId}/confirm`,
+        `${BASE_URL}/api/applications/${appId}/confirm`,
         {},
         { headers: { Authorization: `Bearer ${user.token}` } }
       );
@@ -80,7 +72,7 @@ const UserDashboard = () => {
 
     try {
       await axios.put(
-        `http://localhost:5000/api/applications/${appId}/correction`,
+        `${BASE_URL}/api/applications/${appId}/correction`,
         { comment: reason },
         { headers: { Authorization: `Bearer ${user.token}` } }
       );

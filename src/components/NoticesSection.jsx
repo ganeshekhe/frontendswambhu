@@ -19,10 +19,12 @@ const NoticesSection = () => {
   const [notices, setNotices] = useState([]);
   const [mode, setMode] = useState("vertical");
 
+  const BASE_URL = import.meta.env.VITE_BACKEND_URL || "https://swambhu-backend.onrender.com";
+
   useEffect(() => {
     const fetchNotices = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/notices");
+  const res = await axios.get(`${BASE_URL}/api/notices`);
         setNotices(res.data);
       } catch (error) {
         console.error("Failed to fetch notices", error);

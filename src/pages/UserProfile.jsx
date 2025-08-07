@@ -1,9 +1,9 @@
-
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useUser } from "../context/UserContext";
 
-const BASE_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
+// ✅ UPDATED: Use Render backend URL from .env file
+const BASE_URL = import.meta.env.VITE_BACKEND_URL || "https://swambhu-backend.onrender.com";
 
 const UserProfile = () => {
   const { user } = useUser();

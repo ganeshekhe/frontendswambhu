@@ -6,13 +6,14 @@ import jwt_decode from "jwt-decode";
 import axios from "axios";
 
 const UserContext = createContext();
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
   const fetchUserProfile = async (decodedUser, token) => {
     try {
-      const res = await axios.get(`http://localhost:5000/api/users/${decodedUser.id}/profile`, {
+ const res = await axios.get(`${BASE_URL}/api/users/${decodedUser.id}/profile`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 

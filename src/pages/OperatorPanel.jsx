@@ -5,7 +5,8 @@ import axios from "axios";
 import { useUser } from "../context/UserContext";
 import { io } from "socket.io-client"; // 👈 added
 
-const BASE_URL = "http://localhost:5000";
+const BASE_URL = import.meta.env.VITE_BASE_URL;
+
 
 const OperatorPanel = () => {
   const { user } = useUser();

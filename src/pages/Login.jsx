@@ -1,10 +1,10 @@
-
-
 import { useState } from "react";
 import axios from "axios";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate, Link } from "react-router-dom";
 import { FaFacebookF, FaInstagram, FaWhatsapp } from "react-icons/fa";
+
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const Login = () => {
   const [form, setForm] = useState({ mobile: "", password: "" });
@@ -36,7 +36,7 @@ const Login = () => {
 
     try {
       setLoading(true);
-      const res = await axios.post("http://localhost:5000/api/auth/login", form);
+      const res = await axios.post(`${BASE_URL}/api/auth/login`, form);
       login(res.data);
       const role = res.data.user.role;
       if (role === "admin") navigate("/admin");
@@ -124,4 +124,3 @@ const Login = () => {
 };
 
 export default Login;
-

@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useUser } from "../context/UserContext";
 
-const BASE_URL = "http://localhost:5000";
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 
 function AdminPanel() {
   const { user } = useUser();
@@ -192,7 +193,8 @@ function AdminPanel() {
 
   const handleAddNotice = async () => {
     try {
-      const res = await axios.post("http://localhost:5000/api/notices", {
+     const res = await axios.post(`${BASE_URL}/api/notices`, {
+
         title: newNotice,
       });
       setNotices([...notices, res.data]);
@@ -204,7 +206,7 @@ function AdminPanel() {
 
   const handleDeleteNotice = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/notices/${id}`);
+      await axios.delete(`${BASE_URL}/api/notices/${id}`);
       setNotices(notices.filter((n) => n._id !== id));
     } catch (err) {
       console.error("Error deleting notice", err);
@@ -213,7 +215,7 @@ function AdminPanel() {
 
   const handleSaveEdit = async (id) => {
     try {
-      const res = await axios.put(`http://localhost:5000/api/notices/${id}`, {
+      const res = await axios.put(`${BASE_URL}/api/notices/${id}`, {
         title: editedNotice,
       });
       setNotices(
@@ -355,7 +357,7 @@ function AdminPanel() {
                 className="border rounded overflow-hidden shadow relative"
               >
                 <img
-                  src={`http://localhost:5000/api/files/${slide.image?.filename}`}
+                  src={`${BASE_URL}/api/files/${slide.image?.filename}`}
                   alt={slide.title}
                   className="w-full h-[180px] object-cover"
                 />
@@ -551,7 +553,7 @@ function AdminPanel() {
 
                       {app.certificateUrl && (
                         <a
-                          href={`http://localhost:5000${app.certificateUrl}`}
+                          href={`${BASE_URL}${app.certificateUrl}`}
                           target="_blank"
                           rel="noreferrer"
                           className="text-blue-500 underline mt-1 block"
