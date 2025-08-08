@@ -5,6 +5,7 @@ import { useUser } from "../context/UserContext";
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 
+
 function AdminPanel() {
   const { user } = useUser();
   const [applications, setApplications] = useState([]);

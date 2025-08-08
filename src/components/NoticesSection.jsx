@@ -19,7 +19,7 @@ const NoticesSection = () => {
   const [notices, setNotices] = useState([]);
   const [mode, setMode] = useState("vertical");
 
-  const BASE_URL = import.meta.env.VITE_BACKEND_URL || "https://swambhu-backend.onrender.com";
+  const BASE_URL = import.meta.env.VITE_API_BASE_URL || "https://swambhu-backend.onrender.com";
 
   useEffect(() => {
     const fetchNotices = async () => {

@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useUser } from "../context/UserContext";
 
-const BASE_URL = import.meta.env.VITE_BASE_URL;
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const ApplicationForm = () => {
   const { serviceId } = useParams();

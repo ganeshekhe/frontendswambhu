@@ -3,6 +3,9 @@ import axios from "axios";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
+// Use backend base URL from env, fallback to localhost
+const BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
+
 const AuthPage = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
@@ -21,8 +24,8 @@ const AuthPage = () => {
     e.preventDefault();
     try {
       const url = isLogin
-        ? "http://localhost:5000/api/auth/login"
-        : "http://localhost:5000/api/auth/register";
+        ? `${BASE_URL}/auth/login`
+        : `${BASE_URL}/auth/register`;
 
       const res = await axios.post(url, form);
       if (isLogin) {

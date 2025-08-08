@@ -4,7 +4,7 @@ import { useAuth } from "../context/AuthContext";
 import { useNavigate, Link } from "react-router-dom";
 import { FaFacebookF, FaInstagram, FaWhatsapp } from "react-icons/fa";
 
-const BASE_URL = import.meta.env.VITE_BASE_URL;
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const Login = () => {
   const [form, setForm] = useState({ mobile: "", password: "" });
@@ -15,7 +15,8 @@ const Login = () => {
 
   const validate = () => {
     const errs = {};
-    if (!/^[6-9]\d{9}$/.test(form.mobile)) errs.mobile = "❌ Enter valid 10-digit mobile number";
+    if (!/^[6-9]\d{9}$/.test(form.mobile))
+      errs.mobile = "❌ Enter valid 10-digit mobile number";
     if (!form.password || form.password.length < 6)
       errs.password = "❌ Password must be at least 6 characters";
     return errs;
@@ -36,7 +37,8 @@ const Login = () => {
 
     try {
       setLoading(true);
-      const res = await axios.post(`${BASE_URL}/api/auth/login`, form);
+      // Note: BASE_URL already ends with /api, so use `/auth/login`
+      const res = await axios.post(`${BASE_URL}/auth/login`, form);
       login(res.data);
       const role = res.data.user.role;
       if (role === "admin") navigate("/admin");
@@ -52,20 +54,37 @@ const Login = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-tr from-pink-200 to-orange-100">
       <div className="w-full max-w-5xl bg-white shadow-lg rounded-xl overflow-hidden flex flex-col md:flex-row">
-        
+
         {/* Left Panel */}
         <div className="md:w-1/2 bg-gradient-to-tr from-pink-600 to-orange-500 text-white flex flex-col justify-center items-center p-10 rounded-2xl shadow-2xl">
-          <img src="/logo.jpg" alt="Logo" className="w-28 h-28 mb-4 rounded-full shadow-lg border-4 border-white" />
-          <h2 className="text-4xl font-extrabold mb-2 tracking-wide">Welcome to <span className="text-yellow-300">CEP</span></h2>
-          <p className="text-center text-lg font-medium mb-6">Your Common Exam Portal</p>
+          <img
+            src="/logo.jpg"
+            alt="Logo"
+            className="w-28 h-28 mb-4 rounded-full shadow-lg border-4 border-white"
+          />
+          <h2 className="text-4xl font-extrabold mb-2 tracking-wide">
+            Welcome to <span className="text-yellow-300">CEP</span>
+          </h2>
+          <p className="text-center text-lg font-medium mb-6">
+            Your Common Exam Portal
+          </p>
           <div className="flex space-x-6">
-            <a href="#" className="bg-white text-pink-600 p-3 rounded-full hover:bg-pink-600 hover:text-white transition shadow-lg">
+            <a
+              href="#"
+              className="bg-white text-pink-600 p-3 rounded-full hover:bg-pink-600 hover:text-white transition shadow-lg"
+            >
               <FaFacebookF size={20} />
             </a>
-            <a href="#" className="bg-white text-pink-600 p-3 rounded-full hover:bg-pink-600 hover:text-white transition shadow-lg">
+            <a
+              href="#"
+              className="bg-white text-pink-600 p-3 rounded-full hover:bg-pink-600 hover:text-white transition shadow-lg"
+            >
               <FaInstagram size={20} />
             </a>
-            <a href="#" className="bg-white text-pink-600 p-3 rounded-full hover:bg-pink-600 hover:text-white transition shadow-lg">
+            <a
+              href="#"
+              className="bg-white text-pink-600 p-3 rounded-full hover:bg-pink-600 hover:text-white transition shadow-lg"
+            >
               <FaWhatsapp size={20} />
             </a>
           </div>
@@ -73,8 +92,13 @@ const Login = () => {
 
         {/* Right Panel - Login Form */}
         <div className="md:w-1/2 p-10 flex justify-center items-center">
-          <form onSubmit={handleSubmit} className="bg-white p-6 rounded-xl shadow-md w-full max-w-sm space-y-4">
-            <h2 className="text-2xl font-bold text-center text-pink-600">Login</h2>
+          <form
+            onSubmit={handleSubmit}
+            className="bg-white p-6 rounded-xl shadow-md w-full max-w-sm space-y-4"
+          >
+            <h2 className="text-2xl font-bold text-center text-pink-600">
+              Login
+            </h2>
 
             <input
               type="text"
@@ -86,7 +110,9 @@ const Login = () => {
                 errors.mobile ? "border-red-500" : "border-gray-300"
               }`}
             />
-            {errors.mobile && <p className="text-red-500 text-sm mt-1">{errors.mobile}</p>}
+            {errors.mobile && (
+              <p className="text-red-500 text-sm mt-1">{errors.mobile}</p>
+            )}
 
             <input
               type="password"
@@ -98,13 +124,18 @@ const Login = () => {
                 errors.password ? "border-red-500" : "border-gray-300"
               }`}
             />
-            {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password}</p>}
+            {errors.password && (
+              <p className="text-red-500 text-sm mt-1">{errors.password}</p>
+            )}
 
             <div className="flex justify-between text-sm">
               <Link to="/forgot-password" className="text-blue-500">
                 Forgot Password?
               </Link>
-              <Link to="/signup" className="text-pink-600 font-medium hover:underline">
+              <Link
+                to="/signup"
+                className="text-pink-600 font-medium hover:underline"
+              >
                 New user? Sign up
               </Link>
             </div>

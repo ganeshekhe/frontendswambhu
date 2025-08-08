@@ -5,8 +5,10 @@ import { Check, FileText, Download, AlertCircle } from "lucide-react";
 import { saveAs } from "file-saver";
 import { io } from "socket.io-client";
 
-const BASE_URL = import.meta.env.VITE_BASE_URL;
-const FILE_URL = `${BASE_URL}/api/files/`;
+
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+const FILE_URL = `${BASE_URL}/files/`; // remove /api/files if BASE_URL ends with /api
+
 
 const UserDashboard = () => {
   const { user } = useUser();

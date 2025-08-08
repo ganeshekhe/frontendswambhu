@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 
-const BASE_URL = import.meta.env.VITE_BASE_URL;
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const ForgotPassword = () => {
   const [step, setStep] = useState(1);

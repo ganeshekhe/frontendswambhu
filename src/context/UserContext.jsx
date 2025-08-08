@@ -1,11 +1,10 @@
-
-
-
 import { createContext, useContext, useEffect, useState } from "react";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
 
 const UserContext = createContext();
+
+// Use base URL from .env (should include `/api` at end, e.g. https://swambhu-backend.onrender.com/api)
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export const UserProvider = ({ children }) => {
@@ -13,7 +12,7 @@ export const UserProvider = ({ children }) => {
 
   const fetchUserProfile = async (decodedUser, token) => {
     try {
- const res = await axios.get(`${BASE_URL}/api/users/${decodedUser.id}/profile`, {
+      const res = await axios.get(`${BASE_URL}/users/${decodedUser.id}/profile`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -26,7 +25,7 @@ export const UserProvider = ({ children }) => {
         dob: res.data.dob,
         profilePic: res.data.profilePic || null,
 
-        // ✅ All documents
+        // All documents
         tenthCertificate: res.data.tenthCertificate || null,
         tenthMarksheet: res.data.tenthMarksheet || null,
         twelfthCertificate: res.data.twelfthCertificate || null,
@@ -41,6 +40,7 @@ export const UserProvider = ({ children }) => {
       });
     } catch (error) {
       console.error("❌ Failed to fetch profile:", error);
+      setUser(null);
     }
   };
 
@@ -81,5 +81,5 @@ export const UserProvider = ({ children }) => {
   );
 };
 
-// ✅ Correctly exported hook
+// Hook for consuming UserContext
 export const useUser = () => useContext(UserContext);

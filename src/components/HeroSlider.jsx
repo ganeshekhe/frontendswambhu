@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
-const BASE_URL = import.meta.env.VITE_BACKEND_URL || "https://swambhu-backend.onrender.com";
+const BASE_URL = import.meta.env.VITE_API_BASE_URL || "https://swambhu-backend.onrender.com";
 
 const HeroSlider = () => {
   const [slides, setSlides] = useState([]);
